@@ -15,6 +15,20 @@ export const config: Options.Testrunner = {
     
     
     //
+    // =====================
+    // Server Configurations
+    // =====================
+    // Host address of the running Selenium server. This information is usually obsolete as
+    // WebdriverIO automatically connects to localhost. Also, if you are using one of the
+    // supported cloud services like Sauce Labs, Browserstack, Testing Bot or LambdaTest you don't
+    // need to define host and port information because WebdriverIO can figure that out
+    // according to your user and key information. However, if you are using a private Selenium
+    // backend you should define the host address, port, and path here.
+    //
+    hostname: 'http://localhost',
+    port: 4444,
+    path: '/wd/hub/',
+    //
     // ==================
     // Specify Test Files
     // ==================
@@ -31,8 +45,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        // TODO Добавить указание проекта в котором будут запускаться тесты
-        './src/projects/Hobbit'
+        './projects/example/cases/**/*.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -121,7 +134,7 @@ export const config: Options.Testrunner = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
+    services: ['chromedriver','safaridriver','vscode','devtools','docker'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -143,7 +156,7 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['allure'],
+    reporters: [['allure', {outputDir: 'allure-results'}]],
 
 
     
@@ -248,8 +261,11 @@ export const config: Options.Testrunner = {
      * @param {Boolean} result.passed    true if test has passed, otherwise false
      * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        if (!passed) {
+            await browser.takeScreenshot();
+        }
+    },
 
 
     /**

@@ -73,25 +73,25 @@ export class Element {
 		return await this.self.isDisplayed();
 	}
 
-    static async CheckVisible(element: Element, expected: boolean): Promise<void> {
-        const visibilityStatus = await element.GetVisible()
+    async CheckVisible(expected: boolean): Promise<void> {
+        const visibilityStatus = await this.GetVisible()
 		assert.strictEqual(
             visibilityStatus,
             expected, 
-            `Видимость элемента ${element.Name} (${visibilityStatus}) не совпадает с ожидаемым значением (${expected})`);
+            `Видимость элемента ${this.Name} (${visibilityStatus}) не совпадает с ожидаемым значением (${expected})`);
 	}
 
-    static ClickTo(element: Element): void {
-		element.self.click();
+    ClickTo(): void {
+		this.self.click();
 	}
 
-    static async CheckTextContent(element: Element, expected: string): Promise<void> {
-		const actual = await element.textContent;
+    async CheckTextContent(expected: string): Promise<void> {
+		const actual = await this.textContent;
 
 		assert.strictEqual(
 			actual,
 			expected,
-			`Текстовое содержимое элемента ${element.name} (${actual}) ` +
+			`Текстовое содержимое элемента ${this.name} (${actual}) ` +
 				`не совпадает с ожидаемым значением (${expected})`,
 		);
 	}
