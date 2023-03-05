@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "develop" ]
 
   workflow_dispatch:
   
@@ -19,7 +19,4 @@ jobs:
       - name: Run tests
         env:
           SELENIUM_HUB_HOST: 'localhost'
-        run: |
-          nvm use
-          npm ci
-          npm run wdio
+        run: npm cit
