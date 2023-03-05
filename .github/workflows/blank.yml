@@ -2,10 +2,9 @@ name: E2E autotests
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "D-1" ]
   pull_request:
     branches: [ "master", "develop" ]
-
   workflow_dispatch:
   
 jobs:
