@@ -31,8 +31,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        // TODO Добавить указание проекта в котором будут запускаться тесты
-        './src/projects/Hobbit'
+        './projects/example/cases/**/*.ts'
     ],
     // Patterns to exclude.
     exclude: [
@@ -143,7 +142,12 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['allure'],
+    reporters: [['allure', {
+        outputDir: 'allure-results',
+        disableMochaHooks: true,
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: true,
+    }]],
 
 
     
@@ -248,8 +252,11 @@ export const config: Options.Testrunner = {
      * @param {Boolean} result.passed    true if test has passed, otherwise false
      * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        if (!passed) {
+            await browser.takeScreenshot();
+        }
+    },
 
 
     /**
