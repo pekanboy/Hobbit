@@ -1,0 +1,21 @@
+name: E2E autotests
+
+on:
+  push:
+    branches: [ "master", "D-1" ]
+  pull_request:
+    branches: [ "master", "develop" ]
+  workflow_dispatch:
+  
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Autotests
+    steps:
+      - name: Start Selenoid Server
+        uses: Xotabu4/selenoid-github-action@v2
+      - uses: actions/checkout@v1
+      - name: Run tests
+        env:
+          SELENIUM_HUB_HOST: 'localhost'
+        run: npm cit
