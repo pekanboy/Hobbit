@@ -9,6 +9,7 @@
             "@wdio/mocha-framework",
             "@wdio/devtools-service"
         ],
-        "target": "es2022"
+        "target": "ES5",
+        "experimentalDecorators": true,
     }
 }
