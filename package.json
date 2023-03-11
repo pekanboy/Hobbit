@@ -15,10 +15,12 @@
     "wdio-docker-service": "^3.2.1",
     "wdio-safaridriver-service": "^2.1.0",
     "wdio-vscode-service": "^5.0.0",
-    "wdio-wait-for": "^3.0.2"
+    "wdio-wait-for": "^3.0.2",
+    "webdriverio": "^8.5.9"
   },
   "scripts": {
     "test": "wdio run ./wdio.conf.ts",
-    "report": "allure generate"
+    "report:gen": "allure generate",
+    "report:serve": "allure serve"
   }
 }
