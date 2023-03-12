@@ -1,4 +1,4 @@
-import type { Options } from '@wdio/types'
+import type {Options} from '@wdio/types';
 
 export const config: Options.Testrunner = {
     //
@@ -8,11 +8,17 @@ export const config: Options.Testrunner = {
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
     autoCompileOpts: {
+        autoCompile: true,
         tsNodeOpts: {
-            project: './tsconfig.json'
+            transpileOnly: true,
+            project: './tsconfig.json',
         }
     },
     
+    // hostname: 'localhost',
+    // port: 4444,
+    // path: '/wd/hub/',
+    // headless: true,
     
     //
     // ==================
@@ -31,7 +37,7 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     specs: [
-        './projects/example/cases/**/*.ts'
+        './projects/example/cases/**/*'
     ],
     // Patterns to exclude.
     exclude: [
@@ -115,6 +121,7 @@ export const config: Options.Testrunner = {
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
     connectionRetryTimeout: 120000,
+    injectGlobals: true,
     //
     // Default request retries count
     connectionRetryCount: 3,

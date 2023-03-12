@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
+        "module": "esnext",
         "moduleResolution": "node",
-        "module": "ESNext",
+        "resolveJsonModule": true,
+        "isolatedModules": false,
         "types": [
             "node",
             "@wdio/globals/types",
@@ -9,6 +11,17 @@
             "@wdio/mocha-framework",
             "@wdio/devtools-service"
         ],
-        "target": "es2022"
+        "target": "ES6",
+        "experimentalDecorators": true,
+        "allowJs": true,
+        "baseUrl": "./",
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": false
+
     }
 }
