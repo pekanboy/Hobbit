@@ -1,4 +1,4 @@
-import { LoggerService } from "../servises/LoggerService/LoggerService";
+import {LoggerService} from "../servises/LoggerService/LoggerService";
 
 const step = (stepLog: string) => {
     return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<Function>) => {
@@ -11,8 +11,8 @@ const step = (stepLog: string) => {
 }
 
 Reflect.defineProperty(global, 'step', {
-	configurable: false,
-	enumerable: false,
-	writable: false,
-	value: step,
+    configurable: false,
+    enumerable: false,
+    writable: false,
+    value: step,
 });
