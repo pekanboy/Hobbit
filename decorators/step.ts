@@ -1,11 +1,11 @@
-import {LoggerService} from "../servises/LoggerService/LoggerService";
+import {LoggerService} from "../servises/LoggerService/LoggerService.js";
 
 const step = (stepLog: string) => {
     return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<Function>) => {
         const targetFunction = descriptor.value;
         
         descriptor.value = () => {
-            LoggerService.step(stepLog, () => {targetFunction()})
+            LoggerService.step(stepLog, () => {targetFunction?.()})
         }
     }
 }

@@ -15,5 +15,13 @@
         "experimentalDecorators": true,
         "allowJs": true,
         "baseUrl": "./",
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": false
+
     }
 }

@@ -1,6 +1,5 @@
 import {tryToGetGetterDescriptor} from './element.utils';
 import * as assert from 'assert';
-import {ChainablePromiseElement} from 'webdriverio'
 
 /**
  * Класс, представляющий собой абстракцию над любым элементом страницы
@@ -14,9 +13,6 @@ export class Element {
 	protected locator: string;
 	/** название элемента */
 	protected name: string;
-
-
-	private elementCache: null | ChainablePromiseElement<WebdriverIO.Element> = null;
 
 	
     constructor();
@@ -64,9 +60,8 @@ export class Element {
         return this.name;
     }
 
-    get self(): ChainablePromiseElement<WebdriverIO.Element>  {
-		this.elementCache = this.elementCache || $(this.Locator);
-		return this.elementCache;
+    get self() {
+		return $(this.Locator);
     }
 
     get textContent(): Promise<string> {
