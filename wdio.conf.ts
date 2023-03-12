@@ -15,10 +15,10 @@ export const config: Options.Testrunner = {
         }
     },
     
-    hostname: 'localhost',
-    port: 4444,
-    path: '/wd/hub/',
-    headless: true,
+    // hostname: 'localhost',
+    // port: 4444,
+    // path: '/wd/hub/',
+    // headless: true,
     
     //
     // ==================
