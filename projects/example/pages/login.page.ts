@@ -36,7 +36,6 @@ class LoginPage extends Page {
     @step('Открываем страницу авторизации')
     public open () {
         return super.open('login');
-        
     }
 }
 
