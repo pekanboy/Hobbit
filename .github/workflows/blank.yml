@@ -19,3 +19,18 @@ jobs:
         env:
           SELENIUM_HUB_HOST: 'localhost'
         run: npm cit
+      - name: Create Report
+        run: npm run report:gen
+      - uses: actions/upload-artifact@v1
+        with:
+            name: allure-report
+            path: ./allure-report
+      - name: Deploy Report
+        env:
+          SECRET: ${{ secrets.ALLURE_DEPLOY_S3_SECRET }}
+          ACCESS_KEY: ${{ secrets.ALLURE_DEPLOY_S3_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id $ACCESS_KEY
+          aws configure set aws_secret_access_key $SECRET
+          aws configure set region us-west-1
+          aws s3 mv allure-report s3://hobbit-allure/reports/project/ --endpoint-url https://hb.bizmrg.com --recursive
