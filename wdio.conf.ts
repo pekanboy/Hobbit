@@ -5,9 +5,7 @@ export const config: Options.Testrunner = {
     // ====================
     // Runner Configuration
     // ====================
-    // WebdriverIO supports running e2e tests as well as unit and component tests.
-    // runner: 'local',
-    runner: 'browser',
+    runner: 'local',
 
     autoCompileOpts: {
         autoCompile: true,
@@ -17,7 +15,7 @@ export const config: Options.Testrunner = {
         }
     },
     
-    hostname: 'localhost',
+    hostname: '127.0.0.1',
     port: 4444,
     path: '/wd/hub/',
     headless: true,
@@ -76,7 +74,7 @@ export const config: Options.Testrunner = {
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
-            args: ['headless', 'disable-gpu'],
+            args: ['disable-gpu'],
         },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs

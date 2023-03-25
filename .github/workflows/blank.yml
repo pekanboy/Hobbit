@@ -16,7 +16,7 @@ jobs:
       - name: Start Selenoid Server
         run: |
           cd ./selenoid
-          ./cm selenoid start --vnc
+          ./cm_linux selenoid start --vnc
       - name: Run tests
         env:
           SELENIUM_HUB_HOST: 'localhost'
