@@ -13,7 +13,9 @@ jobs:
     name: Autotests
     steps:
       - name: Start Selenoid Server
-        uses: Xotabu4/selenoid-github-action@v2
+        run: |
+          cd selenoid
+          ./cm selenoid start --vnc
       - uses: actions/checkout@v1
       - name: Run tests
         env:
