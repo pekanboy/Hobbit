@@ -1,6 +1,7 @@
 name: E2E autotests
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       includeTests:
