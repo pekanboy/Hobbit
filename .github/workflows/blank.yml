@@ -1,24 +1,24 @@
 name: E2E autotests
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master", "develop" ]
   workflow_dispatch:
-  
+    inputs:
+      includeTests:
+        description: 'includeTests'
+        required: false
+        default: ''
+        type: string
+
 jobs:
   tests:
     runs-on: ubuntu-latest
     name: Autotests
     steps:
-      - name: Start Selenoid Server
-        uses: Xotabu4/selenoid-github-action@v2
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Run tests
-        env:
-          SELENIUM_HUB_HOST: 'localhost'
-        run: npm cit
+        run: |
+          npm ci
+          SELENIUM="on" npm run test
       - name: Create Report
         run: npm run report:gen
       - uses: actions/upload-artifact@v1
