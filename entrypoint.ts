@@ -1,7 +1,7 @@
 import type {Options} from '@wdio/types';
 import './decorators/step.js';
 
-const isSeleniumRunner = process.env.SELENIUM === 'on'
+const isSeleniumRunner = process.env.SELENIUM === 'on';
 
 const baseConfig: Options.Testrunner = {
     runner: 'local',
@@ -30,7 +30,7 @@ const baseConfig: Options.Testrunner = {
         maxInstances: 3,
         browserName: 'chrome',
         'goog:chromeOptions': {
-            args: ['--headless', 'disable-gpu'],
+            args: ['disable-gpu'],
         },
         'selenoid:options': {
             'enableVNC': true,
@@ -46,7 +46,7 @@ const baseConfig: Options.Testrunner = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     injectGlobals: true,
-    connectionRetryCount: 1,
+    connectionRetryCount: 3,
 
     services: ['chromedriver'],
     framework: 'mocha',

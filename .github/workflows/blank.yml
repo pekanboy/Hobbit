@@ -7,9 +7,6 @@ on:
     branches: [ "master", "develop" ]
   workflow_dispatch:
 
-env:
-  SELENIUM: on
-
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -21,9 +18,9 @@ jobs:
           cd ./selenoid
           ./cm_linux selenoid start --vnc
       - name: Run tests
-        env:
-          SELENIUM_HUB_HOST: 'localhost'
-        run: npm cit
+        run: |
+          npm ci
+          SELENIUM="on" npm run test
       - name: Create Report
         run: npm run report:gen
       - uses: actions/upload-artifact@v1
