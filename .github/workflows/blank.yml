@@ -1,11 +1,13 @@
 name: E2E autotests
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master", "develop" ]
   workflow_dispatch:
+    inputs:
+      includeTests:
+        description: 'includeTests'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   tests:
