@@ -13,10 +13,6 @@ jobs:
     name: Autotests
     steps:
       - uses: actions/checkout@v2
-      - name: Start Selenoid Server
-        run: |
-          cd ./selenoid
-          ./cm_linux selenoid start --vnc
       - name: Run tests
         run: |
           npm ci
