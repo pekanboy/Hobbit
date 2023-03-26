@@ -3,11 +3,12 @@ name: E2E autotests
 on:
   workflow_dispatch:
     inputs:
-      includeTests:
-        description: 'includeTests'
-        required: false
-        default: ''
-        type: string
+      project:
+        description: 'Директория проекта'
+        required: true
+        type: choice
+        options: 
+          - example
 
 jobs:
   tests:
@@ -33,4 +34,5 @@ jobs:
           aws configure set aws_access_key_id $ACCESS_KEY
           aws configure set aws_secret_access_key $SECRET
           aws configure set region us-west-1
-          aws s3 mv allure-report s3://hobbit-allure/reports/project/ --endpoint-url https://hb.bizmrg.com --recursive
+          export timestamp=$(date +%s)
+          aws s3 mv allure-report s3://hobbit-allure/reports/${{ github.event.inputs.project }}/${{ github.actor }}/$timestamp/ --endpoint-url https://hb.bizmrg.com --recursive
