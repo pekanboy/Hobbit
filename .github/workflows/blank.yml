@@ -1,14 +1,8 @@
 name: E2E autotests
 
 on:
-  push:
   workflow_dispatch:
     inputs:
-      includeTests:
-        description: 'Тесты для запуска (сепаратор - запятая)'
-        required: false
-        default: ''
-        type: string
       project:
         description: 'Директория проекта'
         required: true
@@ -25,7 +19,7 @@ jobs:
       - name: Run tests
         run: |
           npm ci
-          npm run test
+          SELENIUM="on" npm run test
       - name: Create Report
         run: npm run report:gen
       - uses: actions/upload-artifact@v1

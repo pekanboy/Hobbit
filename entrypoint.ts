@@ -30,7 +30,7 @@ const baseConfig: Options.Testrunner = {
         maxInstances: 3,
         browserName: 'chrome',
         'goog:chromeOptions': {
-            args: ['headless', 'disable-gpu'],
+            args: ['disable-gpu'],
         },
         'selenoid:options': {
             'enableVNC': true,
