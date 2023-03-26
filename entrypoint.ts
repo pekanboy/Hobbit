@@ -14,7 +14,7 @@ const baseConfig: Options.Testrunner = {
         }
     },
     
-    hostname: 'localhost',
+    hostname: '89.208.208.18',
     port: 4444,
     path: '/wd/hub/',
     headless: true,
