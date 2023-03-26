@@ -4,10 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       includeTests:
-        description: 'includeTests'
+        description: 'Тесты для запуска (сепаратор - запятая)'
         required: false
         default: ''
         type: string
+      project:
+        description: 'Директория проекта'
+        required: true
+        type: choice
+        options: 
+          - example
 
 jobs:
   tests:
@@ -18,7 +24,7 @@ jobs:
       - name: Run tests
         run: |
           npm ci
-          SELENIUM="on" npm run test
+          npm run test
       - name: Create Report
         run: npm run report:gen
       - uses: actions/upload-artifact@v1
@@ -33,4 +39,5 @@ jobs:
           aws configure set aws_access_key_id $ACCESS_KEY
           aws configure set aws_secret_access_key $SECRET
           aws configure set region us-west-1
-          aws s3 mv allure-report s3://hobbit-allure/reports/project/ --endpoint-url https://hb.bizmrg.com --recursive
+          export timestamp=$(date +%s)
+          aws s3 mv allure-report s3://hobbit-allure/reports/${{ github.event.inputs.project }}/${{ github.actor }}/$timestamp/ --endpoint-url https://hb.bizmrg.com --recursive
