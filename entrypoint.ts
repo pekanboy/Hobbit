@@ -1,5 +1,6 @@
 import type {Options} from '@wdio/types';
 import './decorators/step.js';
+import './decorators/see.js';
 
 const isSeleniumRunner = process.env.SELENIUM === 'on';
 
@@ -40,7 +41,7 @@ const baseConfig: Options.Testrunner = {
         acceptInsecureCerts: true
     }],
     
-    logLevel: 'info',
+    logLevel: 'warn',
     bail: 0,
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
@@ -54,12 +55,18 @@ const baseConfig: Options.Testrunner = {
         outputDir: 'allure-results',
         disableMochaHooks: true,
         disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+        addConsoleLogs: true,
     }]],
 
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 60000,
+        retries: 0,
+        trace: true,
+		fullTrace: true,
+		'throw-deprecation': true,
+		'trace-deprecation': true,
     },
 
     /**
