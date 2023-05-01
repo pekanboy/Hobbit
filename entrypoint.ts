@@ -3,6 +3,36 @@ import './decorators/step.js';
 import './decorators/see.js';
 
 const isSeleniumRunner = process.env.SELENIUM === 'on';
+const projectName = process.env.PROJECT_NAME;
+const browsers = process.env.BROWSERS?.split('|') || [];
+
+console.log(`
+========================================================================================================================
+Переданные параметры:
+--- PROJECT_NAME: ${process.env.PROJECT_NAME}
+--- BROWSERS: ${process.env.BROWSERS}
+========================================================================================================================
+`);
+
+if (typeof projectName !== 'string') {
+    throw new Error(`
+    ========================================================================================================================
+    ========================================================================================================================
+    ==================== - Название проекта не передано. Определите переменную окружения PROJECT_NAME - ====================
+    ========================================================================================================================
+    ========================================================================================================================
+    `);
+}
+
+if (browsers.length === 0) {
+    throw new Error(`
+    ========================================================================================================================
+    ========================================================================================================================
+    ======================= - Список браузеров не передан. Определите переменную окружения BROWSERS - ======================
+    ========================================================================================================================
+    ========================================================================================================================
+    `);
+}
 
 const baseConfig: Options.Testrunner = {
     runner: 'local',
@@ -21,25 +51,13 @@ const baseConfig: Options.Testrunner = {
     headless: true,
     
     specs: [
-        './projects/example/cases/**/*'
+        `./projects/${projectName}/cases/**/*`
     ],
     exclude: [],
 
 
     maxInstances: 10,
-    capabilities: [{
-        maxInstances: 3,
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-            args: ['disable-gpu'],
-        },
-        'selenoid:options': {
-            'enableVNC': true,
-            'enableVideo': false,
-            'screenResolution': '1920x1080',
-        },
-        acceptInsecureCerts: true
-    }],
+    capabilities: [],
     
     logLevel: 'warn',
     bail: 0,
@@ -86,8 +104,47 @@ const baseConfig: Options.Testrunner = {
     },
 };
 
-export const config: Options.Testrunner = {
+const browsersConfig: Record<string, typeof baseConfig.capabilities> = {
+    'chrome': [{
+        maxInstances: 3,
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: ['disable-gpu'],
+        },
+        'selenoid:options': {
+            'enableVNC': true,
+            'enableVideo': false,
+            'screenResolution': '1920x1080',
+        },
+        acceptInsecureCerts: true
+    }],
+
+    'firefox': [{
+        maxInstances: 3,
+        browserName: 'firefox',
+        'moz:firefoxOptions': {
+          args: ['-headless']
+        },
+        'selenoid:options': {
+            'enableVNC': true,
+            'enableVideo': false,
+            'screenResolution': '1920x1080',
+        },
+        acceptInsecureCerts: true
+    }],
+}
+
+export const config: Options.Testrunner = { 
     ...baseConfig,
+    capabilities: browsers.reduce((acc, browser) => {
+        if (!Array.isArray(acc)) {
+            return [];
+        }
+
+        const browserData = Array.isArray(browsersConfig[browser]) ? browsersConfig[browser] : []
+
+        return [...acc, ...(browserData as any)];
+    }, <typeof baseConfig.capabilities>[]),
     services: [
         ...(baseConfig.services?.filter((name) => !isSeleniumRunner || name !== 'chromedriver') || []),
     ]

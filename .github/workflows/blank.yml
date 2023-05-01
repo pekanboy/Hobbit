@@ -9,11 +9,22 @@ on:
         type: choice
         options: 
           - example
+      browsers:
+        description: 'На каких браузерах запустить тесты'
+        required: true
+        type: multi-choice
+        options: 
+          - chrome
+          - firefox
+
 
 jobs:
   tests:
     runs-on: ubuntu-latest
     name: Autotests
+    env:
+      PROJECT_NAME: ${{ github.event.inputs.project }}
+      BROWSERS: ${{ github.event.inputs.browsers }}
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -36,8 +47,8 @@ jobs:
           aws configure set aws_secret_access_key $SECRET
           aws configure set region us-west-1
           export timestamp=$(date +%s)
-          echo "ALLURE_PATH=$(echo hobbit-allure/reports/${{ github.event.inputs.project }}/${{ github.actor }}/$timestamp)" >> $GITHUB_ENV
-          aws s3 mv allure-report s3://hobbit-allure/reports/${{ github.event.inputs.project }}/${{ github.actor }}/$timestamp/ --endpoint-url ${{ vars.ALLURE_ENDPOINT}} --recursive
+          echo "ALLURE_PATH=$(echo hobbit-allure/reports/$PROJECT_NAME/${{ github.actor }}/$timestamp)" >> $GITHUB_ENV
+          aws s3 mv allure-report s3://hobbit-allure/reports/$PROJECT_NAME/${{ github.actor }}/$timestamp/ --endpoint-url ${{ vars.ALLURE_ENDPOINT}} --recursive
       - name: Notify
         run: |
           echo URL TO ALLURE -- https://hb.bizmrg.com/$ALLURE_PATH/index.html
