@@ -11,4 +11,8 @@ export class LoggerService {
             allureReporter.endStep(Status.BROKEN);
         }
     }
+
+    static async addTestCaseLink(link: string) {
+        allureReporter.addLink(link, 'Test case url');
+    }
 }
